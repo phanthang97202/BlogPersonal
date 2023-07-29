@@ -13,9 +13,6 @@ export const metadata: Metadata = {
   title: "My Blog",
   description: "This is my blog app using nextjs 13",
   icons: {
-    rel: "icon",
-    type: "image/png",
-    sizes: "32x32",
     icon: "https://c0.klipartz.com/pngpicture/332/60/sticker-png-anime-non-non-biyori-npm-manga-installation-anime-purple-cg-artwork-black-hair-manga-cartoon.png",
   },
 };
