@@ -1,19 +1,15 @@
 import AuthLogin from "@context/AuthContext";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Link from "next/link";
 import RouterLink from "@components/RouterLink/RouterLink";
 import QueryClientProviderApp from "@context/QueryClientProviderApp";
 import ToastifyContainerApp from "@context/ToastifyContainerApp";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "My Blog",
+  title: "PhanThang",
   description: "This is my blog app using nextjs 13",
   icons: {
-    icon: "https://c0.klipartz.com/pngpicture/332/60/sticker-png-anime-non-non-biyori-npm-manga-installation-anime-purple-cg-artwork-black-hair-manga-cartoon.png",
+    icon: "/assets/images/favicon.png",
   },
 };
 
@@ -29,8 +25,11 @@ export default function RootLayout({
           <QueryClientProviderApp>
             <AuthLogin>
               <ToastifyContainerApp />
-              <RouterLink />
-              {children}
+              {/*    // top-0 fixed bg-zinc-300 w-full */}
+              <div className="h-[5vh]">
+                <RouterLink />
+              </div>
+              <div className="h-[95vh]">{children}</div>
             </AuthLogin>
           </QueryClientProviderApp>
         </div>

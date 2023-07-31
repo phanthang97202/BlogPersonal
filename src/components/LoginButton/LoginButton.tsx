@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { auth } from "../../config/firebase";
+import { AuthContext } from "@context/AuthContext";
 
 const LoginButton = () => {
   const [signInWithGoogle, _user, _loading, _error] = useSignInWithGoogle(auth);

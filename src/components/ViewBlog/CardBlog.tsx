@@ -10,7 +10,6 @@ import Link from "next/link";
 //   dataPost: Object[];
 // }
 const CardBlog = ({ dataPosts }: any) => {
-  console.log("===dataPosts", dataPosts);
   return (
     <>
       {dataPosts ? (
@@ -19,7 +18,7 @@ const CardBlog = ({ dataPosts }: any) => {
             <div key={p._id} className="border outline-slate-900 p-4">
               <h2 className="text-violet-600 text-2xl">#{p.title}</h2>
               <p className="italic text-[16px]">{p.shorten}...</p>
-              <Link href={`/view-post/${p._id}`}>View Post ➡ </Link>
+              <Link href={`/detail-post/${p._id}`}>View Post ➡ </Link>
             </div>
           );
         })

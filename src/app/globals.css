@@ -8,3 +8,6 @@
 .btn-primary {
   @apply outline border-slate-50 bg-indigo-400 px-5 py-5 rounded text-white hover:bg-indigo-600 hover:ease-in duration-300;
 }
+.loading-center {
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10;
+}

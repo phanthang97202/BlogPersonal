@@ -1,66 +1,45 @@
 "use client";
 import Form, { IFormData } from "@/components/Form/Form";
+import CircleLoading from "@components/CircleLoading";
 import LoginButton from "@components/LoginButton/LoginButton";
 import { AuthContext } from "@context/AuthContext";
-import { useQuery } from "@tanstack/react-query";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
+import { createPostHttp } from "@utils/httpsRequest";
 import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useContext } from "react";
 
 const CreatePost = () => {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const auth = useContext(AuthContext);
+  const authUser: any = useContext(AuthContext);
+
+  const addPostMutation = useMutation({
+    mutationFn: async (body: IFormData) => {
+      const resp = await createPostHttp(
+        "api/posts/create",
+        authUser,
+        body,
+        `Failed to created`
+      );
+      return resp;
+    },
+  });
+
   const handleSubmitForm = async (dataForm: IFormData) => {
-    setLoading(true);
     try {
-      setTimeout(async () => {
-        await fetch("api/posts/create", {
-          method: "POST",
-          body: JSON.stringify({
-            title: dataForm.titlePost,
-            shorten: dataForm.shortDescPost,
-            content: dataForm.mainContentPost,
-          }),
-        });
-        toast("Create Post Success", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          type: "success",
-        });
-        router.push("/");
-        setLoading(false);
-      }, 3000);
-    } catch (error: any) {
-      setLoading(false);
-      toast("Something went wrong", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        type: "error",
-      });
-      return new Error("Error", error);
+      addPostMutation.mutate(dataForm);
+      router.push("/");
+      // reset data và error
+      // addPostMutation.reset()
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
     <div>
-      {auth ? (
+      {authUser ? (
         <>
-          {loading ? (
-            <Image
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-              height={200}
-              width={200}
-              src="/assets/images/loading.gif"
-              alt="loading"
-            />
-          ) : (
-            <></>
-          )}
+          {addPostMutation.isLoading ? <CircleLoading /> : <></>}
           <Form typeForm="create" onSubmitForm={handleSubmitForm} />
         </>
       ) : (

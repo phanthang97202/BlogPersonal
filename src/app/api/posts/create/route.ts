@@ -1,9 +1,8 @@
 import Post from "@/models/Post";
 import { connectToDatabase } from "@/utils/database";
 
-export const POST = async (request: any) => {
+export const POST = async (request: any, response: any) => {
   const { title, shorten, content } = await request.json();
-
   try {
     await connectToDatabase();
 
@@ -13,7 +12,16 @@ export const POST = async (request: any) => {
       content,
     });
 
-    return new Response(JSON.stringify(newPost), { status: 201 });
+    return new Response(
+      JSON.stringify({
+        newPost,
+        request: `${request}`,
+        response: `${response}`,
+      }),
+      {
+        status: 201,
+      }
+    );
   } catch (error) {
     return new Response(`Failed create new prompt \n ${error} `, {
       status: 500,
